@@ -1,14 +1,15 @@
 import sys
 
 
-def get_ratings(file_name):
+def get_ratings():
     """Get restaurant ratings from file.
 
         file_name: text file which contents names of restaurants and its ratings
 
     """
 
-    openfile = open(file_name)
+    filename = sys.argv[1]
+    openfile = open(filename)
 
     ratings = {}
 
@@ -38,14 +39,48 @@ def add_user_rating(rating):
     """get new rating from user and add to existing ratings"""
 
     name = raw_input("Enter name of restaurant: \n")
-    score = int(raw_input("Enter rating of restaurant(1-5): \n"))
+    while True:
+        try:
+            score = int(raw_input("Enter rating of restaurant(1-5): \n"))
+            break
+        except ValueError:
+            print "Invalid input. Please enter 1-5"
     rating[name] = score
-  
 
-filename = sys.argv[1]
-restaurant_rating = get_ratings(filename)
-# call function to print ratings
-print_ratings(restaurant_rating)
 
-add_user_rating(restaurant_rating)
-print_ratings(restaurant_rating)
+def pick_choice():
+    """Allow user their choice of 3 actions.
+
+        Actions:
+        1: see rating
+        2: add new rating
+        3: quit
+
+    """
+#Allow user to choose their action
+    while True:
+        user_choice = raw_input("\nWould you like to: \n" +
+                                "see ratings(Enter 1),\n" +
+                                "add new restaurant(Enter 2),\n" +
+                                "quit (Enter 3)\n")
+        if user_choice == "1" or user_choice == "2":
+            run_choice(user_choice)
+        elif user_choice == "3":
+            print "Goodbye!"
+            return
+        else:
+            print "Make right choice, please"
+
+
+def run_choice(choice):
+    """Call appropriate function based on user choice """
+    if choice == "1":
+        restaurant_rating = get_ratings()
+        print_ratings(restaurant_rating)
+    elif choice == "2":
+        restaurant_rating = get_ratings()
+        add_user_rating(restaurant_rating)
+        print_ratings(restaurant_rating)
+
+
+pick_choice()
