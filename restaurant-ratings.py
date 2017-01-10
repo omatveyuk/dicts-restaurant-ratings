@@ -1,4 +1,5 @@
 import sys
+import random
 
 
 def get_ratings():
@@ -83,4 +84,25 @@ def run_choice(choice):
         print_ratings(restaurant_rating)
 
 
-pick_choice()
+def give_random_rest():
+
+    #create dictionary
+    restaurant_rating = get_ratings()
+    #pull a random key, value pair (random choice)
+    name = random.choice(restaurant_rating.keys())
+    print name, "is rated at", restaurant_rating[name]
+    #raw input a new score from user
+    while True:
+        try:
+            score = int(raw_input("Enter rating of restaurant(1-5): \n"))
+            break
+        except ValueError:
+            print "Invalid input. Please enter 1-5"
+    #assign new value to key(rest)
+    restaurant_rating[name] = score
+    #print again
+    print_ratings(restaurant_rating)
+
+
+# pick_choice()
+give_random_rest()
